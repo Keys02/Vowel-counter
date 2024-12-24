@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vowel Counter</title>
+    </head>
+    <style>
+        * {
+            box-sizing:border-box;
+        }
+        body {
+            margin:50px;
+        }
+
+        h1 {
+            text-align:center;
+            color:rgb(235, 14, 14);
+        }
+        div#container {
+            border:1px solid black;
+            width:100%;
+            border-radius:5px;
+            height:200px;
+        }
+        label {
+            margin-left:32%;
+            font-size:1.2rem;
+        }
+        
+        label, input {
+            margin-top:20px;
+
+        }
+
+        input::placeholder {
+            color:blue;
+        }
+
+        input#stat_col {
+            color:blue;
+            width:200px;
+            height:50px;
+            font-size:1rem
+        }
+        input#submit {
+            border:none;
+            background-color:green;
+            color:white;
+            width:100px;
+            height:50px;
+            border-radius:5px;
+            cursor:pointer;
+            font-size:1rem
+        }
+        div.result{
+            margin-left:10px;
+            font-size:1.1em;
+        }
+
+        p.input_temp {
+            color:crimson;
+        }
+
+        span.count-num {
+            color:blue;
+            font-weight:bolder
+        }
+        </style>
+    <body>
+        <div id="container">
+        <h1>VOWEL COUNTER</h1>
+        <label for="stat_col">Enter Statement:</label>
+        <input id="stat_col" type="text" placeholder="Statement....">
+        <input id="submit" type="Submit" value="submit">
+        <div class="result"></div>
+        </div>
+        <script>
+            //Vowel counter
+            const inputStat = document.getElementById("stat_col");
+            const submitBtn = document.getElementById("submit");
+            const result = document.querySelector(".result");
+            let vowels = ["a","e","i","o","u"];
+
+            // Brainiac Function
+            function vowelConverter(statement){
+                let vowelCounter = 0
+                for(let i=0; i<statement.length; i++){
+                    if(vowels.includes(statement[i].toLowerCase())){
+                        vowelCounter++
+                    }
+                }
+
+             return vowelCounter
+            }
+
+
+            function filterInputIntoTemp(){
+                let vowelCounterNum = vowelConverter(inputStat.value.trim())
+                    let inputIntoTemp
+                    if(inputStat.value == ""){
+                        inputIntoTemp = `<p class="input_temp">Enter a statement in the input field!!</p>`;
+                    }
+                    else if(vowelCounterNum == 0){
+                        inputIntoTemp = `<p>There is no vowel in the statement</p>`;
+                    }
+                   else if(vowelCounterNum < 2){
+                        inputIntoTemp = `<p>There is only <span class="count-num">${vowelCounterNum}</span> vowel in the statement</p>`;
+                    }
+                    else{
+                        inputIntoTemp = `<p>There are <span class="count-num">${vowelCounterNum}</span> vowels in the statement</p>`;
+                    }
+                    return inputIntoTemp
+                }
+            
+            // Submit Button clicked
+            submitBtn.addEventListener("click", function(e){
+                e.preventDefault()
+
+                vowelConverter(inputStat.value.trim())
+                result.innerHTML =  filterInputIntoTemp();
+            })
+
+            //Submit Button not clicked
+            if(inputStat.value == ""){
+                result.innerHTML = filterInputIntoTemp();
+            }
+
+            
+        </script>
+    </body>
+    </html>
